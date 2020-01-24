@@ -50,14 +50,78 @@
     </style>
   </head>
   <body>
-    <!-- <h1 class="title"> This is a heading</h1>
-    <p id="par"> This is a paragraph.</p>
-    <div id="scatter1"></div>
 
-    <script src="https://d3js.org/d3.v4.js"></script>
-    <script src="script.js"></script> -->
+    <div class = "container-fluid">
+			<div class = "row">
+				<div class = "col" >
 
-    <button class="updatedata">updatedata</button>
+          <h3> Interests </h3>
+          <input type="checkbox" id="I-Music" > Music <br>
+          <input type="checkbox" id="I-Movies" > Movies <br>
+          <input type="checkbox" id="I-Travel" > Travel <br>
+          <input type="checkbox" id="I-Photo" > Photo <br>
+          <input type="checkbox" id="I-Sport" > Sport <br>
+          <input type="checkbox" id="I-Painting" > Painting <br>
+          <input type="checkbox" id="I-Books" > Books <br>
+          <input type="checkbox" id="I-Food" > Food <br>
+          <input type="checkbox" id="I-Programming" > Programming <br>
+          <input type="checkbox" id="I-UX" > UX <br>
+          <input type="checkbox" id="I-Gamming" > Gamming <br>
+          <input type="checkbox" id="I-GameDev" > Game Development <br>
+          <input type="checkbox" id="I-Travel" > Travel <br>
+          <input type="checkbox" id="I-Dance" > Dance <br>
+          <input type="checkbox" id="I-Art/Design" > Art/Design <br>
+          <input type="checkbox" id="I-Vis" > Visualization <br>
+          <input type="checkbox" id="I-Science" > Science <br>
+          <input type="checkbox" id="I-Create" > Create <br>
+          <input type="checkbox" id="I-Nat/Sust" > Nature / Sustainability <br>
+          <input type="checkbox" id="I-Tech" > Technology <br>
+
+        </div>
+        <div class = "col" >
+
+          <h3> Skill Range Decision </h3>
+          Information Visualization:
+             <input type="number" id="InfVis/B" min="1" max="10" value = "1">
+             - <input type="number" id="InfVis/E" min="1" max="10" value = "10"> <br>
+          Statistics:
+             <input type="number" id="Stat/B" min="1" max="10" value = "1">
+             - <input type="number" id="Stat/E" min="1" max="10" value = "10"> <br>
+          Math:
+             <input type="number" id="Math/B" min="1" max="10" value = "1">
+             - <input type="number" id="Math/E" min="1" max="10" value = "10"> <br>
+          Artistic:
+             <input type="number" id="Art/B" min="1" max="10" value = "1">
+             - <input type="number" id="Art/E" min="1" max="10" value = "10"> <br>
+          Computers:
+             <input type="number" id="PC/B" min="1" max="10" value = "1">
+             - <input type="number" id="PC/E" min="1" max="10" value = "10"> <br>
+          Programming:
+             <input type="number" id="Prog/B" min="1" max="10" value = "1">
+             - <input type="number" id="Prog/E" min="1" max="10" value = "10"> <br>
+          Computer Graphics:
+             <input type="number" id="PCGraph/B" min="1" max="10" value = "1">
+             - <input type="number" id="PCGraph/E" min="1" max="10" value = "10"> <br>
+          Human-Computer Interaction:
+             <input type="number" id="HPCInter/B" min="1" max="10" value = "1">
+             - <input type="number" id="HPCInter/E" min="1" max="10" value = "10"> <br>
+          User Experience:
+             <input type="number" id="UX/B" min="1" max="10" value = "1">
+             - <input type="number" id="UX/E" min="1" max="10" value = "10"> <br>
+          Communication:
+             <input type="number" id="Comm/B" min="1" max="10" value = "1">
+             - <input type="number" id="Comm/E" min="1" max="10" value = "10"> <br>
+          Collaborating Graphics:
+             <input type="number" id="Collab/B" min="1" max="10" value = "1">
+             - <input type="number" id="Collab/E" min="1" max="10" value = "10"> <br>
+          Repositories Interaction:
+             <input type="number" id="Repo/B" min="1" max="10" value = "1">
+             - <input type="number" id="Repo/E" min="1" max="10" value = "10"> <br>
+        </div>
+      </div>
+      <br>
+      <button type="submit" class="update">update</button>
+    </div>
 
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script>
@@ -88,14 +152,6 @@
       svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
       var key = function(d) { return d.data.label; };
-
-
-      function randomData (labels) {
-
-        return labels.map(function(label) {
-          return { label: label, value: 1/labels.length} //Math.random() }
-        });
-      }
 
       d3.csv("https://raw.githubusercontent.com/marbali8/dh2321-p1/master/dataset.csv", function(data) {
 
@@ -136,104 +192,231 @@
             "repositories skill": d.Repo
           }
         });
-        var colors = [];
-        var names = fdata.map(function(d) { return d["name"] });
-        for (var i = 0; i < names.length; i++) colors.push(Math.floor(Math.random()*16777215).toString(16));
 
-        var color = d3.scale.ordinal()
+        var names = data.map(function(d) { return d.Alias; });
+        var rcolors = [];
+        for (var i = 0; i < data.length; i++) rcolors.push(Math.floor(Math.random()*16777215).toString(16));
+
+        var colors = d3.scale.ordinal()
           .domain(names)
-          .range(colors);
+          .range(rcolors);
 
-        d3.select(".updatedata")
-        	.on("click", function(){
-        		change(fdata, randomData(names));
+        d3.select(".update")
+        	.on("click", function() {
+
+            weights = getSliceWeights(data, getFilters());
+
+        		change(data, pairingPie(names, weights), colors);
         	});
 
-        change(fdata, randomData(names));
-
-        function change(fdata, names) {
-
-        	/* ------- PIE SLICES -------*/
-        	var slice = svg.select(".slices").selectAll("path.slice")
-        		.data(pie(names), key);
-
-          var div = d3.select("body").append("div")
-            .attr("class", "tooltip-donut")
-            .style("opacity", 0);
-
-        	slice.enter()
-        		.insert("path")
-        		.style("fill", function(d) { return color(d.data.label); })
-        		.attr("class", "slice")
-
-            .on('mouseover', function (d, i) {
-              d3.select(this).transition()
-                .duration('50')
-                .attr('opacity', '.85');
-              div.transition()
-                .duration(50)
-                .style("opacity", 1);
-
-              div.html(formatText(fdata[i]))
-                .style("left", (d3.event.pageX + 10) + "px")
-                .style("top", (d3.event.pageY - 15) + "px");
-            })
-
-            .on('mouseout', function (d, i) {
-              d3.select(this).transition()
-                .duration('50')
-                .attr('opacity', '1');
-              div.transition()
-                .duration('50')
-                .style("opacity", 0);
-     });
-
-        	slice
-        		.transition().duration(1000)
-        		.attrTween("d", function(d) {
-        			this._current = this._current || d;
-        			var interpolate = d3.interpolate(this._current, d);
-        			this._current = interpolate(0);
-        			return function(t) {
-        				return arc(interpolate(t));
-        			};
-        		})
-
-        	slice.exit()
-        		.remove();
-        };
-
+        change(data, pairingPie(names, Array(names.length).fill(1)), colors);
       })
 
+      // FUNCTIONS
+
+      function change(data, pairs, colors) {
+
+        /* ------- PIE SLICES -------*/
+        var slice = svg.select(".slices").selectAll("path.slice")
+          .data(pie(pairs), key);
+
+        var div = d3.select("body").append("div")
+          .attr("class", "tooltip-donut")
+          .style("opacity", 0);
+
+        slice.enter()
+          .insert("path")
+          .style("fill", function(d) { return colors(d.data.label); })
+          .attr("class", "slice")
+
+          .on('mouseover', function (d, i) {
+            d3.select(this).transition()
+              .duration('50')
+              .attr('opacity', '.85');
+            div.transition()
+              .duration(50)
+              .style("opacity", 1);
+
+            div.html(formatText(data[i]))
+              .style("left", (d3.event.pageX + 10) + "px")
+              .style("top", (d3.event.pageY - 15) + "px");
+          })
+
+          .on('mouseout', function (d, i) {
+            d3.select(this).transition()
+              .duration('50')
+              .attr('opacity', '1');
+            div.transition()
+              .duration('50')
+              .style("opacity", 0);
+          });
+
+        slice
+          .transition().duration(1000)
+          .attrTween("d", function(d) {
+            this._current = this._current || d;
+            var interpolate = d3.interpolate(this._current, d);
+            this._current = interpolate(0);
+            return function(t) {
+              return arc(interpolate(t));
+            };
+          })
+
+        slice.exit().remove();
+      }
+
+      function pairingPie(names, weights) {
+
+        return names.map(function(label, i) {
+          return { label: label, value: weights[i] }
+        });
+      }
+
+      function getSliceWeights(data, filters = NaN) {
+
+        if (filters == NaN) { return Array(data.length).fill(1); }
+        var weights = [];
+        data.forEach(function(d, i) { // d is a dictionary (person), i an index
+          // document.write(d.Alias + "\n");
+          weights[i] = 0;
+          Object.keys(d).forEach(function(kd) { // kd is a key from the person (Alias, InfVis, I-Photo, etc.)
+
+            if (d[kd] == "0") { return; }  // not interests for this person
+
+            var filterkey = Object.keys(filters).filter(function(kf) { return kf.includes(kd) });
+            if (filterkey.length <= 0) { return; } // for name
+            else if (filterkey.length == 1) {
+
+              filterkey = filterkey[0];
+              if (filterkey.includes("I-") && filters[filterkey] == true) {
+                // document.write("1 ");
+                weights[i]++;
+              } // interests
+            } else {
+              if (!filterkey.includes("I-")) {  // skills
+                let markB = +filters[filterkey[0]];
+                let markE = +filters[filterkey[1]];
+                if (d[kd] >= markB && +d[kd] <= markE) { weights[i]++; }
+                // document.write(filterkey + ": " + d[kd] + " > " + markB + " <" + markE + " ");
+                // if (filterkey.includes("/B") && +d[kd] >= mark) { weights[i] += 1/2; }
+                // if (filterkey.includes("/E") && +d[kd] <= mark) { weights[i] += 1/2; }
+              }
+            }
+          }); //document.write("TOTAL " + weights[i]);
+        })
+        // document.write(weights);
+
+        var sum = weights.reduce(function(tot, v) { return tot + v; });
+        // document.write(weights.map(function(w) { return w / sum; }));
+
+        return weights.map(function(w) { return w / sum; });
+      }
+
+      function getFilters() {
+
+        return {
+
+          "I-Music": document.getElementById("I-Music").checked,
+          "I-Movies": document.getElementById("I-Movies").checked,
+          "I-Travel": document.getElementById("I-Travel").checked,
+          "I-Photo": document.getElementById("I-Photo").checked,
+          "I-Sport": document.getElementById("I-Sport").checked,
+          "I-Painting": document.getElementById("I-Painting").checked,
+          "I-Books": document.getElementById("I-Books").checked,
+          "I-Food": document.getElementById("I-Food").checked,
+          "I-Programming": document.getElementById("I-Programming").checked,
+          "I-UX": document.getElementById("I-UX").checked,
+          "I-Gamming": document.getElementById("I-Gamming").checked,
+          "I-GameDev": document.getElementById("I-GameDev").checked,
+          "I-Dance": document.getElementById("I-Dance").checked,
+          "I-Art/Design": document.getElementById("I-Art/Design").checked,
+          "I-Vis": document.getElementById("I-Vis").checked,
+          "I-Science": document.getElementById("I-Science").checked,
+          "I-Create": document.getElementById("I-Create").checked,
+          "I-Nat/Sust": document.getElementById("I-Nat/Sust").checked,
+          "I-Tech": document.getElementById("I-Tech").checked,
+          "InfVis/B": document.getElementById("InfVis/B").value,
+          "Stat/B": document.getElementById("Stat/B").value,
+          "Math/B": document.getElementById("Math/B").value,
+          "Art/B": document.getElementById("Art/B").value,
+          "PC/B": document.getElementById("PC/B").value,
+          "Prog/B": document.getElementById("Prog/B").value,
+          "PCGraph/B": document.getElementById("PCGraph/B").value,
+          "HPCInter/B": document.getElementById("HPCInter/B").value,
+          "UX/B": document.getElementById("UX/B").value,
+          "Comm/B": document.getElementById("Comm/B").value,
+          "Collab/B": document.getElementById("Collab/B").value,
+          "Repo/B": document.getElementById("Repo/B").value,
+          "InfVis/E": document.getElementById("InfVis/E").value,
+          "Stat/E": document.getElementById("Stat/E").value,
+          "Math/E": document.getElementById("Math/E").value,
+          "Art/E": document.getElementById("Art/E").value,
+          "PC/E": document.getElementById("PC/E").value,
+          "Prog/E": document.getElementById("Prog/E").value,
+          "PCGraph/E": document.getElementById("PCGraph/E").value,
+          "HPCInter/E": document.getElementById("HPCInter/E").value,
+          "UX/E": document.getElementById("UX/E").value,
+          "Comm/E": document.getElementById("Comm/E").value,
+          "Collab/E": document.getElementById("Collab/E").value,
+          "Repo/E": document.getElementById("Repo/E").value
+        }
+
+      }
+
       function formatText(d_el) {
+
         var text = "";
         var interests = false, skills = false;
+
         Object.keys(d_el).forEach(function(k) {
-          if (k.includes("interest") && d_el[k] == "1") {
+          if (k.includes("I-") && d_el[k] == "1") { // interests
             if (!interests) {
               interests = !interests;
-              text += "<br /> Interests: " + k.replace(" interest", "");
+              text += "<br /> Interests: " + keyText(k);
             } else {
-              text += ", " + k.replace(" interest", "");
+              text += ", " + keyText(k);
             }
-          } else if (k.includes("skill")) {
+          } else if (!k.includes("I-") && k.includes("Alias")) { // name
+            text += keyText(k) + ": " + d_el[k];
+          } else if (!k.includes("I-") && d_el[k] == "1") { // skills
             if (!skills) {
               skills = !skills;
-              text += "<br /> Skills: " + k.replace(" skill", "") + " (" + d_el[k] + ")";
+              text += "<br /> Skills: " + keyText(k) + " (" + d_el[k] + ")";
             } else {
-              text += ", " + k.replace(" skill", "") + " (" + d_el[k] + ")";
+              text += ", " + keyText(k) + " (" + d_el[k] + ")";
             }
-          } else if (!k.includes("interest") && !k.includes("skill")) {
-            if (!k.includes("name")) { text += "<br />"; }
-            text += k + ": " + d_el[k];
           }
         })
         return text;
       }
 
-    </script>
-    </body>
-</html>
+      function keyText(key) {
 
-<!-- we want to be close on interest, and find people that have skills that we lack
-so  -->
+        switch (key) {
+          case "Alias": return "Name";
+          case "I-Music", "I-Movies", "I-Travel", "I-Sport", "I-Painting",
+               "I-Books", "I-Food", "I-Programming", "I-UX", "I-Gamming",
+               "I-Dance", "I-Science", "I-Create": return key.replace("I-", "");
+          case "I-Photo": return "Photography";
+          case "I-GameDev": return "Game Development";
+          case "I-Art/Design": return "Art / Design";
+          case "I-Vis": return "Visualization";
+          case "I-Nat/Sust": return "Nature / Sustainability";
+          case "I-Tech": return "Technology";
+
+          case "InfVis": return "Information Visualization";
+          case "Stat": return "Statistics";
+          case "PC": return "Computers";
+          case "PCGraph": return "Computer Graphics";
+          case "Prog": return "Programming";
+          case "HPCInter": return "Human-Computer Interaction";
+          case "Comm": return "Communication";
+          case "Collab": return "Collaboration";
+          case "Repo": return "Repositories";
+          default: return key; //Math,Art,UX,Collab,Repo
+        }
+      }
+
+    </script>
+  </body>
+</html>
