@@ -98,8 +98,45 @@
 
       d3.csv("https://raw.githubusercontent.com/marbali8/dh2321-p1/master/dataset.csv", function(data) {
 
-        var names = d3.map(data, function(d){return(d.Alias)}).keys();
+        var fdata = data.map(function(d) {
+          return {
+            "name": d.Alias,
+            "music interest": d["I-Music"],
+            "movie interest": d["I-Movies"],
+            "travel interest": d["I-Travel"],
+            "photo interest": d["I-Photo"],
+            "sport interest": d["I-Sport"],
+            "paint interest": d["I-Painting"],
+            "book interest": d["I-Books"],
+            "food/nutrition interest": d["I-Food"],
+            "programming interest": d["I-Programming"],
+            "ux interest": d["I-UX"],
+            "gamming interest": d["I-Gamming"],
+            "game dev interest": d["I-GameDev"],
+            "travel interest": d["I-Travel"],
+            "dance interest": d["I-Dance"],
+            "art/design interest": d["I-Art/Design"],
+            "visualization interest": d["I-Vis"],
+            "science interest": d["I-Science"],
+            "create interest": d["I-Create"],
+            "nature / sustainability interest": d["I-Nat/Sust"],
+            "technology interest": d["I-Tech"],
+            "information visualization": d.InfVis,
+            "statistics": d.Stat,
+            "mathematics": d.Math,
+            "artistic": d.Art,
+            "computers": d.PC,
+            "programming": d.Prog,
+            "computer graphics": d.PCGraph,
+            "human-computer interaction": d.HPCInter,
+            "user experience": d.UX,
+            "communication": d.Comm,
+            "collaborating": d.Collab,
+            "repositories": d.Repo
+          }
+        });
         var colors = [];
+        var names = fdata.map(function(d) { return d["name"] });
         for (var i = 0; i < names.length; i++) colors.push(Math.floor(Math.random()*16777215).toString(16));
 
         var color = d3.scale.ordinal()
@@ -108,14 +145,16 @@
 
         d3.select(".updatedata")
         	.on("click", function(){
-        		change(randomData(names));
+        		change(fdata, randomData(names));
         	});
 
-        function change(data) {
+        change(fdata, randomData(names));
+
+        function change(fdata, names) {
 
         	/* ------- PIE SLICES -------*/
         	var slice = svg.select(".slices").selectAll("path.slice")
-        		.data(pie(data), key);
+        		.data(pie(names), key);
 
           var div = d3.select("body").append("div")
             .attr("class", "tooltip-donut")
@@ -134,7 +173,7 @@
                 .duration(50)
                 .style("opacity", 1);
 
-              div.text(data[i].label)
+              div.text(names[i].label)
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY - 15) + "px");
             })
