@@ -12,14 +12,15 @@
       }
       div.tooltip-donut {
        position: absolute;
-       text-align: center;
+       text-align: left;
        padding: .5rem;
-       background: #FFFFFF;
+       background: #efeaf0;
        color: #313639;
-       border: 1px solid #313639;
+       border: 0px;
        border-radius: 8px;
        pointer-events: none;
-       font-size: 1.3rem;
+       font-size: 1rem;
+       width: 40%;
       }
 
       body {
@@ -121,18 +122,18 @@
             "create interest": d["I-Create"],
             "nature / sustainability interest": d["I-Nat/Sust"],
             "technology interest": d["I-Tech"],
-            "information visualization": d.InfVis,
-            "statistics": d.Stat,
-            "mathematics": d.Math,
-            "artistic": d.Art,
-            "computers": d.PC,
-            "programming": d.Prog,
-            "computer graphics": d.PCGraph,
-            "human-computer interaction": d.HPCInter,
-            "user experience": d.UX,
-            "communication": d.Comm,
-            "collaborating": d.Collab,
-            "repositories": d.Repo
+            "information visualization skill": d.InfVis,
+            "statistics skill": d.Stat,
+            "mathematics skill": d.Math,
+            "artistic skill": d.Art,
+            "computers skill": d.PC,
+            "programming skill": d.Prog,
+            "computer graphics skill": d.PCGraph,
+            "human-computer interaction skill": d.HPCInter,
+            "user experience skill": d.UX,
+            "communication skill": d.Comm,
+            "collaborating skill": d.Collab,
+            "repositories skill": d.Repo
           }
         });
         var colors = [];
@@ -173,7 +174,7 @@
                 .duration(50)
                 .style("opacity", 1);
 
-              div.text(names[i].label)
+              div.html(formatText(fdata[i]))
                 .style("left", (d3.event.pageX + 10) + "px")
                 .style("top", (d3.event.pageY - 15) + "px");
             })
@@ -203,6 +204,32 @@
         };
 
       })
+
+      function formatText(d_el) {
+        var text = "";
+        var interests = false, skills = false;
+        Object.keys(d_el).forEach(function(k) {
+          if (k.includes("interest") && d_el[k] == "1") {
+            if (!interests) {
+              interests = !interests;
+              text += "<br /> Interests: " + k.replace(" interest", "");
+            } else {
+              text += ", " + k.replace(" interest", "");
+            }
+          } else if (k.includes("skill")) {
+            if (!skills) {
+              skills = !skills;
+              text += "<br /> Skills: " + k.replace(" skill", "") + " (" + d_el[k] + ")";
+            } else {
+              text += ", " + k.replace(" skill", "") + " (" + d_el[k] + ")";
+            }
+          } else if (!k.includes("interest") && !k.includes("skill")) {
+            if (!k.includes("name")) { text += "<br />"; }
+            text += k + ": " + d_el[k];
+          }
+        })
+        return text;
+      }
 
     </script>
     </body>
