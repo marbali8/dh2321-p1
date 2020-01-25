@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Pie Decision</title>
     <style>
       .title
       {
@@ -50,6 +51,15 @@
     </style>
   </head>
   <body>
+
+    <h1> Pie Decision </h1>
+    <p> Welcome to this page! Basically, this works like this: here you have loads
+      of filters (interests and skills). The more conditions your classmates apply to,
+      the bigger they will appear on the cake. I did this without exclusivity, which
+      means that if you check music as an interest and leave the skill ranges 1-10,
+      the person that likes music will have more weight on the pie, but the people that
+      do not like it will not disappear. </p>
+    <p> Hope you find this helpful! </p>
 
     <div class = "container-fluid">
 			<div class = "row">
@@ -111,16 +121,16 @@
           Communication:
              <input type="number" id="S-Comm/B" min="1" max="10" value = "1">
              - <input type="number" id="S-Comm/E" min="1" max="10" value = "10"> <br>
-          Collaborating Graphics:
+          Collaborating:
              <input type="number" id="S-Collab/B" min="1" max="10" value = "1">
              - <input type="number" id="S-Collab/E" min="1" max="10" value = "10"> <br>
-          Repositories Interaction:
+          Repositories:
              <input type="number" id="S-Repo/B" min="1" max="10" value = "1">
              - <input type="number" id="S-Repo/E" min="1" max="10" value = "10"> <br>
         </div>
       </div>
       <br>
-      <button type="submit" class="update">update</button>
+      <button type="submit" class="update"> Update pie </button>
     </div>
 
     <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -418,4 +428,9 @@
 
     </script>
   </body>
+  <footer>
+    <p> Thank you for using this tool! My name is Mar Balibrea and I developed this
+      as a project for the DH2321 INFORMATION VISUALIZATION course at KTH, 2020.
+      For any questions, you can contact me at marbalibrea8@gmail.com. </p>
+  </footer>
 </html>
