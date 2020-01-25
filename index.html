@@ -157,45 +157,45 @@
 
         var fdata = data.map(function(d) {
           return {
-            "name": d.Alias,
-            "music interest": d["I-Music"],
-            "movie interest": d["I-Movies"],
-            "travel interest": d["I-Travel"],
-            "photo interest": d["I-Photo"],
-            "sport interest": d["I-Sport"],
-            "paint interest": d["I-Painting"],
-            "book interest": d["I-Books"],
-            "food/nutrition interest": d["I-Food"],
-            "programming interest": d["I-Programming"],
-            "ux interest": d["I-UX"],
-            "gamming interest": d["I-Gamming"],
-            "game dev interest": d["I-GameDev"],
-            "travel interest": d["I-Travel"],
-            "dance interest": d["I-Dance"],
-            "art/design interest": d["I-Art/Design"],
-            "visualization interest": d["I-Vis"],
-            "science interest": d["I-Science"],
-            "create interest": d["I-Create"],
-            "nature / sustainability interest": d["I-Nat/Sust"],
-            "technology interest": d["I-Tech"],
-            "information visualization skill": d.InfVis,
-            "statistics skill": d.Stat,
-            "mathematics skill": d.Math,
-            "artistic skill": d.Art,
-            "computers skill": d.PC,
-            "programming skill": d.Prog,
-            "computer graphics skill": d.PCGraph,
-            "human-computer interaction skill": d.HPCInter,
-            "user experience skill": d.UX,
-            "communication skill": d.Comm,
-            "collaborating skill": d.Collab,
-            "repositories skill": d.Repo
+            "Alias": d.Alias,
+            "I-Music": d["I-Music"],
+            "I-Movies": d["I-Movies"],
+            "I-Travel": d["I-Travel"],
+            "I-Photo": d["I-Photo"],
+            "I-Sport": d["I-Sport"],
+            "I-Painting": d["I-Painting"],
+            "I-Books": d["I-Books"],
+            "I-Food": d["I-Food"],
+            "I-Programming": d["I-Programming"],
+            "I-UX": d["I-UX"],
+            "I-Gamming": d["I-Gamming"],
+            "I-GameDev": d["I-GameDev"],
+            "I-Travel": d["I-Travel"],
+            "I-Dance": d["I-Dance"],
+            "I-Art/Design": d["I-Art/Design"],
+            "I-Vis": d["I-Vis"],
+            "I-Science": d["I-Science"],
+            "I-Create": d["I-Create"],
+            "I-Nat/Sust": d["I-Nat/Sust"],
+            "I-Tech": d["I-Tech"],
+            "InfVis": d.InfVis,
+            "Stat": d.Stat,
+            "Math": d.Math,
+            "Art": d.Art,
+            "PC": d.PC,
+            "Prog": d.Prog,
+            "PCGraph": d.PCGraph,
+            "HPCInter": d.HPCInter,
+            "UX": d.UX,
+            "Comm": d.Comm,
+            "Collab": d.Collab,
+            "Repo": d.Repo
           }
         });
 
-        var names = data.map(function(d) { return d.Alias; });
+        var names = fdata.map(function(d) { return d.Alias; });
         var rcolors = [];
-        for (var i = 0; i < data.length; i++) rcolors.push(Math.floor(Math.random()*16777215).toString(16));
+        for (var i = 0; i < fdata.length; i++) rcolors.push(Math.floor(Math.random()*16777215).toString(16));
 
         var colors = d3.scale.ordinal()
           .domain(names)
@@ -204,12 +204,12 @@
         d3.select(".update")
         	.on("click", function() {
 
-            weights = getSliceWeights(data, getFilters());
+            weights = getSliceWeights(fdata, getFilters());
 
-        		change(data, pairingPie(names, weights), colors);
+        		change(fdata, pairingPie(names, weights), colors);
         	});
 
-        change(data, pairingPie(names, Array(names.length).fill(1)), colors);
+        change(fdata, pairingPie(names, Array(names.length).fill(1/names.length)), colors);
       })
 
       // FUNCTIONS
@@ -274,7 +274,7 @@
 
       function getSliceWeights(data, filters = NaN) {
 
-        if (filters == NaN) { return Array(data.length).fill(1); }
+        if (filters == NaN) { return Array(data.length).fill(1/data.length); }
         var weights = [];
         data.forEach(function(d, i) { // d is a dictionary (person), i an index
           // document.write(d.Alias + "\n");
@@ -378,7 +378,7 @@
             }
           } else if (!k.includes("I-") && k.includes("Alias")) { // name
             text += keyText(k) + ": " + d_el[k];
-          } else if (!k.includes("I-") && d_el[k] == "1") { // skills
+          } else if (!k.includes("I-")) { // skills
             if (!skills) {
               skills = !skills;
               text += "<br /> Skills: " + keyText(k) + " (" + d_el[k] + ")";
@@ -394,9 +394,9 @@
 
         switch (key) {
           case "Alias": return "Name";
-          case "I-Music", "I-Movies", "I-Travel", "I-Sport", "I-Painting",
-               "I-Books", "I-Food", "I-Programming", "I-UX", "I-Gamming",
-               "I-Dance", "I-Science", "I-Create": return key.replace("I-", "");
+          case "I-Music": case "I-Movies": case "I-Travel": case "I-Sport": case "I-Painting":
+          case "I-Books": case "I-Food": case "I-Programming": case "I-UX": case "I-Gamming":
+          case "I-Dance": case "I-Science": case "I-Create": return key.replace("I-", "");
           case "I-Photo": return "Photography";
           case "I-GameDev": return "Game Development";
           case "I-Art/Design": return "Art / Design";
