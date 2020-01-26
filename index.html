@@ -3,49 +3,40 @@
   <head>
     <title>Pie Decision</title>
     <style>
-      .title
-      {
-        color: red;
-      }
-      .title1
-      {
-        color: blue;
-      }
+
       div.tooltip-donut {
-       position: absolute;
-       text-align: left;
-       padding: .5rem;
-       background: #efeaf0;
-       color: #313639;
-       border: 0px;
-       border-radius: 8px;
-       pointer-events: none;
-       font-size: 1rem;
-       width: 40%;
+        position: absolute;
+        text-align: left;
+        padding: .5rem;
+        background: #efeaf0;
+        color: #313639;
+        border: 0px;
+        border-radius: 8px;
+        pointer-events: none;
+        font-size: 0.8rem;
+        width: 30%;
       }
 
       body {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 11px;
-        width: 1000px;
-        height: 500px;
-        position: relative;
+        font-family: "Helvetica Neue";
+        font-size: 13px;
+        width: 100%;
+        height: 100%;
+        position: absolute;
       }
 
       svg {
-      	width: 100%;
-      	height: 100%;
+      	width: 65%;
+      	height: 65%;
+        float: right;
       }
 
-      path.slice{
-      	stroke-width:2px;
+      .col1, .col2 {
+        float: left;
       }
 
-      polyline{
-      	opacity: .3;
-      	stroke: black;
-      	stroke-width: 2px;
-      	fill: none;
+      p {
+        width: 50%;
       }
 
     </style>
@@ -53,85 +44,86 @@
   <body>
 
     <h1> Pie Decision </h1>
-    <p> Welcome to this page! Basically, this works like this: here you have loads
-      of filters (interests and skills). The more conditions your classmates apply to,
-      the bigger they will appear on the cake. I did this without exclusivity, which
-      means that if you check music as an interest and leave the skill ranges 1-10,
-      the person that likes music will have more weight on the pie, but the people that
-      do not like it will not disappear. </p>
+    <p> Welcome to this page! My name is Mar Balibrea and I developed this
+      as a project for the DH2321 INFORMATION VISUALIZATION course at KTH, 2020.
+      For any questions, you can contact me at marbalibrea8@gmail.com. <br>
+      Basically, this works like this: here you have loads of filters (interests
+      and skills). The more conditions your classmates apply to, the bigger they
+      will appear on the cake. I did this without exclusivity, which means that
+      if you check music as an interest and leave the skill ranges 1-10, the
+      person that likes music will have more weight on the pie, but the people
+      that do not like it will not disappear. </p>
+
     <p> Hope you find this helpful! </p>
 
-    <div class = "container-fluid">
-			<div class = "row">
-				<div class = "col" >
 
-          <h3> Interests </h3>
-          <input type="checkbox" id="I-Music" > Music <br>
-          <input type="checkbox" id="I-Movies" > Movies <br>
-          <input type="checkbox" id="I-Travel" > Travel <br>
-          <input type="checkbox" id="I-Photo" > Photo <br>
-          <input type="checkbox" id="I-Sport" > Sport <br>
-          <input type="checkbox" id="I-Painting" > Painting <br>
-          <input type="checkbox" id="I-Books" > Books <br>
-          <input type="checkbox" id="I-Food" > Food <br>
-          <input type="checkbox" id="I-Programming" > Programming <br>
-          <input type="checkbox" id="I-UX" > UX <br>
-          <input type="checkbox" id="I-Gamming" > Gamming <br>
-          <input type="checkbox" id="I-GameDev" > Game Development <br>
-          <input type="checkbox" id="I-Travel" > Travel <br>
-          <input type="checkbox" id="I-Dance" > Dance <br>
-          <input type="checkbox" id="I-Art/Design" > Art / Design <br>
-          <input type="checkbox" id="I-Vis" > Visualization <br>
-          <input type="checkbox" id="I-Science" > Science <br>
-          <input type="checkbox" id="I-Create" > Create <br>
-          <input type="checkbox" id="I-Nat/Sust" > Nature / Sustainability <br>
-          <input type="checkbox" id="I-Tech" > Technology <br>
+		<div class = "col1" >
 
-        </div>
-        <div class = "col" >
+      <h3> Interests </h3>
+      <input type="checkbox" id="I-Music" > Music <br>
+      <input type="checkbox" id="I-Movies" > Movies <br>
+      <input type="checkbox" id="I-Travel" > Travel <br>
+      <input type="checkbox" id="I-Photo" > Photo <br>
+      <input type="checkbox" id="I-Sport" > Sport <br>
+      <input type="checkbox" id="I-Painting" > Painting <br>
+      <input type="checkbox" id="I-Books" > Books <br>
+      <input type="checkbox" id="I-Food" > Food <br>
+      <input type="checkbox" id="I-Programming" > Programming <br>
+      <input type="checkbox" id="I-UX" > UX <br>
+      <input type="checkbox" id="I-Gamming" > Gamming <br>
+      <input type="checkbox" id="I-GameDev" > Game Development <br>
+      <input type="checkbox" id="I-Travel" > Travel <br>
+      <input type="checkbox" id="I-Dance" > Dance <br>
+      <input type="checkbox" id="I-Art/Design" > Art / Design <br>
+      <input type="checkbox" id="I-Vis" > Visualization <br>
+      <input type="checkbox" id="I-Science" > Science <br>
+      <input type="checkbox" id="I-Create" > Create <br>
+      <input type="checkbox" id="I-Nat/Sust" > Nature / Sustainability <br>
+      <input type="checkbox" id="I-Tech" > Technology <br>
 
-          <h3> Skill Range Decision </h3>
-          Information Visualization:
-             <input type="number" id="S-InfVis/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-InfVis/E" min="1" max="10" value = "10"> <br>
-          Statistics:
-             <input type="number" id="S-Stat/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-Stat/E" min="1" max="10" value = "10"> <br>
-          Math:
-             <input type="number" id="S-Math/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-Math/E" min="1" max="10" value = "10"> <br>
-          Artistic:
-             <input type="number" id="S-Art/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-Art/E" min="1" max="10" value = "10"> <br>
-          Computers:
-             <input type="number" id="S-PC/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-PC/E" min="1" max="10" value = "10"> <br>
-          Programming:
-             <input type="number" id="S-Prog/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-Prog/E" min="1" max="10" value = "10"> <br>
-          Computer Graphics:
-             <input type="number" id="S-CompGraph/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-CompGraph/E" min="1" max="10" value = "10"> <br>
-          Human-Computer Interaction:
-             <input type="number" id="S-HPCInter/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-HPCInter/E" min="1" max="10" value = "10"> <br>
-          User Experience:
-             <input type="number" id="S-UX/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-UX/E" min="1" max="10" value = "10"> <br>
-          Communication:
-             <input type="number" id="S-Comm/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-Comm/E" min="1" max="10" value = "10"> <br>
-          Collaborating:
-             <input type="number" id="S-Collab/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-Collab/E" min="1" max="10" value = "10"> <br>
-          Repositories:
-             <input type="number" id="S-Repo/B" min="1" max="10" value = "1">
-             - <input type="number" id="S-Repo/E" min="1" max="10" value = "10"> <br>
-        </div>
-      </div>
-      <br>
-      <button type="submit" class="update"> Update pie </button>
     </div>
+    <div class = "col2" >
+
+        <h3> Skill Range Decision </h3>
+        Information Visualization:
+           <input type="number" id="S-InfVis/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-InfVis/E" min="1" max="10" value = "10"> <br>
+        Statistics:
+           <input type="number" id="S-Stat/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-Stat/E" min="1" max="10" value = "10"> <br>
+        Math:
+           <input type="number" id="S-Math/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-Math/E" min="1" max="10" value = "10"> <br>
+        Artistic:
+           <input type="number" id="S-Art/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-Art/E" min="1" max="10" value = "10"> <br>
+        Computers:
+           <input type="number" id="S-PC/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-PC/E" min="1" max="10" value = "10"> <br>
+        Programming:
+           <input type="number" id="S-Prog/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-Prog/E" min="1" max="10" value = "10"> <br>
+        Computer Graphics:
+           <input type="number" id="S-CompGraph/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-CompGraph/E" min="1" max="10" value = "10"> <br>
+        Human-Computer Interaction:
+           <input type="number" id="S-HPCInter/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-HPCInter/E" min="1" max="10" value = "10"> <br>
+        User Experience:
+           <input type="number" id="S-UX/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-UX/E" min="1" max="10" value = "10"> <br>
+        Communication:
+           <input type="number" id="S-Comm/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-Comm/E" min="1" max="10" value = "10"> <br>
+        Collaborating:
+           <input type="number" id="S-Collab/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-Collab/E" min="1" max="10" value = "10"> <br>
+        Repositories:
+           <input type="number" id="S-Repo/B" min="1" max="10" value = "1">
+           - <input type="number" id="S-Repo/E" min="1" max="10" value = "10"> <br>
+      </div>
+    <br>
+    <button type="submit" class="update"> Update pie </button>
 
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script>
@@ -147,6 +139,7 @@
       	  radius = Math.min(width, height) / 2;
 
       var pie = d3.layout.pie().sort(null)
+        .padAngle(.005)
       	.value(function(d) {
       		return d.value;
       	});
@@ -428,9 +421,4 @@
 
     </script>
   </body>
-  <footer>
-    <p> Thank you for using this tool! My name is Mar Balibrea and I developed this
-      as a project for the DH2321 INFORMATION VISUALIZATION course at KTH, 2020.
-      For any questions, you can contact me at marbalibrea8@gmail.com. </p>
-  </footer>
 </html>
